@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="11af23b483504c8fadae3bd7508934d8" Name="Diagram1" ZoomLevel="62">
+        <EntityTypeShape EntityType="Fichas20Model.Usuarios" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Fichas20Model.Alma_Aprobacion" Width="1.5" PointX="6.625" PointY="6.75" />
+        <EntityTypeShape EntityType="Fichas20Model.Alma_Comentario" Width="1.5" PointX="6.625" PointY="3.875" />
+        <EntityTypeShape EntityType="Fichas20Model.Alma_Imagen" Width="1.5" PointX="6.625" PointY="0.875" />
+        <EntityTypeShape EntityType="Fichas20Model.Alma_Noticia" Width="1.5" PointX="4.375" PointY="3.625" />
+        <AssociationConnector Association="Fichas20Model.FK_Alma_Aprobacion_Alma_Noticia" />
+        <AssociationConnector Association="Fichas20Model.FK_Alma_Comentario_Alma_Noticia" />
+        <AssociationConnector Association="Fichas20Model.FK_Alma_Imagen_Alma_Noticia" />
+        <AssociationConnector Association="Fichas20Model.FK_Alma_Noticia_Usuarios" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,41 @@
+﻿@model AlmaCepech.Models.LogOnModel
+@{
+    ViewBag.Title = "LogOn";
+    Layout = "~/Views/Shared/_SinLayout.cshtml";
+}
+<div class="container">
+    @using (Html.BeginForm("Logon", "Login", FormMethod.Post))
+    {
+    <fieldset>
+        <legend>Alma CPECH</legend>
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+        @if (@ViewBag.Message != null)
+        {
+            <div style="border: 1px solid red">
+                @ViewBag.Message
+            </div>
+        }
+
+        <div class="form-group">
+            <label for="UserName">Usuario</label>
+            @Html.TextBoxFor(a => a.UserName, "", new { Class = "form-control" })
+            @Html.ValidationMessageFor(a => a.UserName)
+        </div>
+        <div class="form-group">
+            <label for="email">Password</label>
+            @Html.PasswordFor(a => a.Password, new { Class = "form-control" })
+            @Html.ValidationMessageFor(a => a.Password)
+        </div>
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                @Html.CheckBoxFor(a=>a.RememberMe,new { Class="form-check-input"}) Recordar
+            </label>
+        </div>
+
+        <input type="submit" value="Login" class="btn btn-primary btn-block" />
+
+    </fieldset>
+    }
+</div>

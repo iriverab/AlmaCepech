@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Fichas20Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Alma_Aprobacion">
+          <Key>
+            <PropertyRef Name="IdGusta" />
+          </Key>
+          <Property Name="IdGusta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" />
+          <Property Name="Gusta" Type="int" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="IdPost" Type="int" />
+        </EntityType>
+        <EntityType Name="Alma_Comentario">
+          <Key>
+            <PropertyRef Name="IdComentario" />
+          </Key>
+          <Property Name="IdComentario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" />
+          <Property Name="IdPost" Type="int" />
+          <Property Name="Comentario" Type="varchar(max)" />
+          <Property Name="Fecha" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Alma_Imagen">
+          <Key>
+            <PropertyRef Name="IdImagen" />
+          </Key>
+          <Property Name="IdImagen" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreImagen" Type="varchar" MaxLength="500" />
+          <Property Name="Contenido" Type="varbinary(max)" />
+          <Property Name="ContentType" Type="varchar" MaxLength="150" />
+          <Property Name="IdPost" Type="int" />
+        </EntityType>
+        <EntityType Name="Alma_Noticia">
+          <Key>
+            <PropertyRef Name="IdPost" />
+          </Key>
+          <Property Name="IdPost" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titulo" Type="varchar(max)" />
+          <Property Name="IdUsuario" Type="int" />
+          <Property Name="Fecha" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+          </Key>
+          <Property Name="ID_Usuario" Type="int" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Nombre_Completo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Ejecutiva_Tlmk" Type="bit" Nullable="false" />
+          <Property Name="ID_Grupo" Type="tinyint" Nullable="false" />
+          <Property Name="Anexo" Type="smallint" />
+          <Property Name="email" Type="varchar" MaxLength="100" />
+          <Property Name="Cargo" Type="varchar" MaxLength="100" />
+          <Property Name="ID_Sede" Type="int" Nullable="false" />
+          <Property Name="Nivel" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Fallas" Type="tinyint" Nullable="false" />
+          <Property Name="Internet" Type="tinyint" Nullable="false" />
+          <Property Name="NivelCobra" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="Ejecutivo_Cobranza" Type="tinyint" />
+          <Property Name="ID_TipoU" Type="tinyint" Nullable="false" />
+          <Property Name="Ultimo_Mensaje" Type="int" />
+          <Property Name="fecha_vencimiento" Type="smalldatetime" />
+          <Property Name="fecha_nacimiento" Type="smalldatetime" />
+          <Property Name="ID_Sede_Laboral" Type="tinyint" />
+          <Property Name="Activo" Type="tinyint" />
+          <Property Name="usuario_desarrollo" Type="int" />
+          <Property Name="Rut_usuario" Type="int" />
+          <Property Name="Dv_Rut" Type="char" MaxLength="1" />
+          <Property Name="id_perfil" Type="int" />
+          <Property Name="Id_Impresora_Boletas" Type="int" />
+          <Property Name="Ejecutiva_CCenter_Cobranza" Type="char" MaxLength="10" />
+          <Property Name="ID_perfil_Wired" Type="int" />
+          <Property Name="id_perfil_icobra" Type="int" />
+          <Property Name="Ejecutivo_Call_Center_IP" Type="bit" />
+          <Property Name="autoriza_convenio" Type="int" />
+          <Property Name="username_GP" Type="char" MaxLength="15" />
+          <Property Name="subir_excel_ensayos" Type="bit" />
+          <Property Name="id_sede_corporacion" Type="int" />
+          <Property Name="Usuario_Televenta" Type="int" />
+          <Property Name="Usuario_Dominio" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Alma_Aprobacion_Alma_Noticia">
+          <End Role="Alma_Noticia" Type="Self.Alma_Noticia" Multiplicity="0..1" />
+          <End Role="Alma_Aprobacion" Type="Self.Alma_Aprobacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alma_Noticia">
+              <PropertyRef Name="IdPost" />
+            </Principal>
+            <Dependent Role="Alma_Aprobacion">
+              <PropertyRef Name="IdPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Alma_Comentario_Alma_Noticia">
+          <End Role="Alma_Noticia" Type="Self.Alma_Noticia" Multiplicity="0..1" />
+          <End Role="Alma_Comentario" Type="Self.Alma_Comentario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alma_Noticia">
+              <PropertyRef Name="IdPost" />
+            </Principal>
+            <Dependent Role="Alma_Comentario">
+              <PropertyRef Name="IdPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Alma_Imagen_Alma_Noticia">
+          <End Role="Alma_Noticia" Type="Self.Alma_Noticia" Multiplicity="0..1" />
+          <End Role="Alma_Imagen" Type="Self.Alma_Imagen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alma_Noticia">
+              <PropertyRef Name="IdPost" />
+            </Principal>
+            <Dependent Role="Alma_Imagen">
+              <PropertyRef Name="IdPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Alma_Noticia_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Alma_Noticia" Type="Self.Alma_Noticia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Alma_Noticia">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Fichas20ModelStoreContainer">
+          <EntitySet Name="Alma_Aprobacion" EntityType="Self.Alma_Aprobacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Alma_Comentario" EntityType="Self.Alma_Comentario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Alma_Imagen" EntityType="Self.Alma_Imagen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Alma_Noticia" EntityType="Self.Alma_Noticia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Alma_Aprobacion_Alma_Noticia" Association="Self.FK_Alma_Aprobacion_Alma_Noticia">
+            <End Role="Alma_Noticia" EntitySet="Alma_Noticia" />
+            <End Role="Alma_Aprobacion" EntitySet="Alma_Aprobacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Alma_Comentario_Alma_Noticia" Association="Self.FK_Alma_Comentario_Alma_Noticia">
+            <End Role="Alma_Noticia" EntitySet="Alma_Noticia" />
+            <End Role="Alma_Comentario" EntitySet="Alma_Comentario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Alma_Imagen_Alma_Noticia" Association="Self.FK_Alma_Imagen_Alma_Noticia">
+            <End Role="Alma_Noticia" EntitySet="Alma_Noticia" />
+            <End Role="Alma_Imagen" EntitySet="Alma_Imagen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Alma_Noticia_Usuarios" Association="Self.FK_Alma_Noticia_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Alma_Noticia" EntitySet="Alma_Noticia" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Fichas20Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="ID_Usuario" />
+          </Key>
+          <Property Name="ID_Usuario" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre_Completo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ejecutiva_Tlmk" Type="Boolean" Nullable="false" />
+          <Property Name="ID_Grupo" Type="Byte" Nullable="false" />
+          <Property Name="Anexo" Type="Int16" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Cargo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ID_Sede" Type="Int32" Nullable="false" />
+          <Property Name="Nivel" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fallas" Type="Byte" Nullable="false" />
+          <Property Name="Internet" Type="Byte" Nullable="false" />
+          <Property Name="NivelCobra" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Ejecutivo_Cobranza" Type="Byte" />
+          <Property Name="ID_TipoU" Type="Byte" Nullable="false" />
+          <Property Name="Ultimo_Mensaje" Type="Int32" />
+          <Property Name="fecha_vencimiento" Type="DateTime" Precision="0" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
+          <Property Name="ID_Sede_Laboral" Type="Byte" />
+          <Property Name="Activo" Type="Byte" />
+          <Property Name="usuario_desarrollo" Type="Int32" />
+          <Property Name="Rut_usuario" Type="Int32" />
+          <Property Name="Dv_Rut" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="id_perfil" Type="Int32" />
+          <Property Name="Id_Impresora_Boletas" Type="Int32" />
+          <Property Name="Ejecutiva_CCenter_Cobranza" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Name="ID_perfil_Wired" Type="Int32" />
+          <Property Name="id_perfil_icobra" Type="Int32" />
+          <Property Name="Ejecutivo_Call_Center_IP" Type="Boolean" />
+          <Property Name="autoriza_convenio" Type="Int32" />
+          <Property Name="username_GP" Type="String" MaxLength="15" FixedLength="true" Unicode="false" />
+          <Property Name="subir_excel_ensayos" Type="Boolean" />
+          <Property Name="id_sede_corporacion" Type="Int32" />
+          <Property Name="Usuario_Televenta" Type="Int32" />
+          <Property Name="Usuario_Dominio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Alma_Noticia" Relationship="Fichas20Model.FK_Alma_Noticia_Usuarios" FromRole="Usuarios" ToRole="Alma_Noticia" />
+        </EntityType>
+        <EntityContainer Name="Fichas20Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <EntitySet Name="Alma_Aprobacion" EntityType="Fichas20Model.Alma_Aprobacion" />
+          <EntitySet Name="Alma_Comentario" EntityType="Fichas20Model.Alma_Comentario" />
+          <EntitySet Name="Alma_Imagen" EntityType="Fichas20Model.Alma_Imagen" />
+          <EntitySet Name="Alma_Noticia" EntityType="Fichas20Model.Alma_Noticia" />
+          <AssociationSet Name="FK_Alma_Aprobacion_Alma_Noticia" Association="Fichas20Model.FK_Alma_Aprobacion_Alma_Noticia">
+            <End Role="Alma_Noticia" EntitySet="Alma_Noticia" />
+            <End Role="Alma_Aprobacion" EntitySet="Alma_Aprobacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Alma_Comentario_Alma_Noticia" Association="Fichas20Model.FK_Alma_Comentario_Alma_Noticia">
+            <End Role="Alma_Noticia" EntitySet="Alma_Noticia" />
+            <End Role="Alma_Comentario" EntitySet="Alma_Comentario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Alma_Imagen_Alma_Noticia" Association="Fichas20Model.FK_Alma_Imagen_Alma_Noticia">
+            <End Role="Alma_Noticia" EntitySet="Alma_Noticia" />
+            <End Role="Alma_Imagen" EntitySet="Alma_Imagen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Alma_Noticia_Usuarios" Association="Fichas20Model.FK_Alma_Noticia_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Alma_Noticia" EntitySet="Alma_Noticia" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Alma_Aprobacion">
+          <Key>
+            <PropertyRef Name="IdGusta" />
+          </Key>
+          <Property Name="IdGusta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <Property Name="Gusta" Type="Int32" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="IdPost" Type="Int32" />
+          <NavigationProperty Name="Alma_Noticia" Relationship="Fichas20Model.FK_Alma_Aprobacion_Alma_Noticia" FromRole="Alma_Aprobacion" ToRole="Alma_Noticia" />
+        </EntityType>
+        <EntityType Name="Alma_Comentario">
+          <Key>
+            <PropertyRef Name="IdComentario" />
+          </Key>
+          <Property Name="IdComentario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <Property Name="IdPost" Type="Int32" />
+          <Property Name="Comentario" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Alma_Noticia" Relationship="Fichas20Model.FK_Alma_Comentario_Alma_Noticia" FromRole="Alma_Comentario" ToRole="Alma_Noticia" />
+        </EntityType>
+        <EntityType Name="Alma_Imagen">
+          <Key>
+            <PropertyRef Name="IdImagen" />
+          </Key>
+          <Property Name="IdImagen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreImagen" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Contenido" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ContentType" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="IdPost" Type="Int32" />
+          <NavigationProperty Name="Alma_Noticia" Relationship="Fichas20Model.FK_Alma_Imagen_Alma_Noticia" FromRole="Alma_Imagen" ToRole="Alma_Noticia" />
+        </EntityType>
+        <EntityType Name="Alma_Noticia">
+          <Key>
+            <PropertyRef Name="IdPost" />
+          </Key>
+          <Property Name="IdPost" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titulo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Alma_Aprobacion" Relationship="Fichas20Model.FK_Alma_Aprobacion_Alma_Noticia" FromRole="Alma_Noticia" ToRole="Alma_Aprobacion" />
+          <NavigationProperty Name="Alma_Comentario" Relationship="Fichas20Model.FK_Alma_Comentario_Alma_Noticia" FromRole="Alma_Noticia" ToRole="Alma_Comentario" />
+          <NavigationProperty Name="Alma_Imagen" Relationship="Fichas20Model.FK_Alma_Imagen_Alma_Noticia" FromRole="Alma_Noticia" ToRole="Alma_Imagen" />
+          <NavigationProperty Name="Usuarios" Relationship="Fichas20Model.FK_Alma_Noticia_Usuarios" FromRole="Alma_Noticia" ToRole="Usuarios" />
+        </EntityType>
+        <Association Name="FK_Alma_Aprobacion_Alma_Noticia">
+          <End Type="Fichas20Model.Alma_Noticia" Role="Alma_Noticia" Multiplicity="0..1" />
+          <End Type="Fichas20Model.Alma_Aprobacion" Role="Alma_Aprobacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alma_Noticia">
+              <PropertyRef Name="IdPost" />
+            </Principal>
+            <Dependent Role="Alma_Aprobacion">
+              <PropertyRef Name="IdPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Alma_Comentario_Alma_Noticia">
+          <End Type="Fichas20Model.Alma_Noticia" Role="Alma_Noticia" Multiplicity="0..1" />
+          <End Type="Fichas20Model.Alma_Comentario" Role="Alma_Comentario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alma_Noticia">
+              <PropertyRef Name="IdPost" />
+            </Principal>
+            <Dependent Role="Alma_Comentario">
+              <PropertyRef Name="IdPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Alma_Imagen_Alma_Noticia">
+          <End Type="Fichas20Model.Alma_Noticia" Role="Alma_Noticia" Multiplicity="0..1" />
+          <End Type="Fichas20Model.Alma_Imagen" Role="Alma_Imagen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Alma_Noticia">
+              <PropertyRef Name="IdPost" />
+            </Principal>
+            <Dependent Role="Alma_Imagen">
+              <PropertyRef Name="IdPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Alma_Noticia_Usuarios">
+          <End Type="Fichas20Model.Usuarios" Role="Usuarios" Multiplicity="0..1" />
+          <End Type="Fichas20Model.Alma_Noticia" Role="Alma_Noticia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="ID_Usuario" />
+            </Principal>
+            <Dependent Role="Alma_Noticia">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Fichas20ModelStoreContainer" CdmEntityContainer="Fichas20Entities">
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="Fichas20Model.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Nombre_Completo" ColumnName="Nombre_Completo" />
+                <ScalarProperty Name="Ejecutiva_Tlmk" ColumnName="Ejecutiva_Tlmk" />
+                <ScalarProperty Name="ID_Grupo" ColumnName="ID_Grupo" />
+                <ScalarProperty Name="Anexo" ColumnName="Anexo" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="Cargo" ColumnName="Cargo" />
+                <ScalarProperty Name="ID_Sede" ColumnName="ID_Sede" />
+                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="Fallas" ColumnName="Fallas" />
+                <ScalarProperty Name="Internet" ColumnName="Internet" />
+                <ScalarProperty Name="NivelCobra" ColumnName="NivelCobra" />
+                <ScalarProperty Name="Ejecutivo_Cobranza" ColumnName="Ejecutivo_Cobranza" />
+                <ScalarProperty Name="ID_TipoU" ColumnName="ID_TipoU" />
+                <ScalarProperty Name="Ultimo_Mensaje" ColumnName="Ultimo_Mensaje" />
+                <ScalarProperty Name="fecha_vencimiento" ColumnName="fecha_vencimiento" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="ID_Sede_Laboral" ColumnName="ID_Sede_Laboral" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="usuario_desarrollo" ColumnName="usuario_desarrollo" />
+                <ScalarProperty Name="Rut_usuario" ColumnName="Rut_usuario" />
+                <ScalarProperty Name="Dv_Rut" ColumnName="Dv_Rut" />
+                <ScalarProperty Name="id_perfil" ColumnName="id_perfil" />
+                <ScalarProperty Name="Id_Impresora_Boletas" ColumnName="Id_Impresora_Boletas" />
+                <ScalarProperty Name="Ejecutiva_CCenter_Cobranza" ColumnName="Ejecutiva_CCenter_Cobranza" />
+                <ScalarProperty Name="ID_perfil_Wired" ColumnName="ID_perfil_Wired" />
+                <ScalarProperty Name="id_perfil_icobra" ColumnName="id_perfil_icobra" />
+                <ScalarProperty Name="Ejecutivo_Call_Center_IP" ColumnName="Ejecutivo_Call_Center_IP" />
+                <ScalarProperty Name="autoriza_convenio" ColumnName="autoriza_convenio" />
+                <ScalarProperty Name="username_GP" ColumnName="username_GP" />
+                <ScalarProperty Name="subir_excel_ensayos" ColumnName="subir_excel_ensayos" />
+                <ScalarProperty Name="id_sede_corporacion" ColumnName="id_sede_corporacion" />
+                <ScalarProperty Name="Usuario_Televenta" ColumnName="Usuario_Televenta" />
+                <ScalarProperty Name="Usuario_Dominio" ColumnName="Usuario_Dominio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alma_Aprobacion">
+            <EntityTypeMapping TypeName="Fichas20Model.Alma_Aprobacion">
+              <MappingFragment StoreEntitySet="Alma_Aprobacion">
+                <ScalarProperty Name="IdPost" ColumnName="IdPost" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Gusta" ColumnName="Gusta" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdGusta" ColumnName="IdGusta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alma_Comentario">
+            <EntityTypeMapping TypeName="Fichas20Model.Alma_Comentario">
+              <MappingFragment StoreEntitySet="Alma_Comentario">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="IdPost" ColumnName="IdPost" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdComentario" ColumnName="IdComentario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alma_Imagen">
+            <EntityTypeMapping TypeName="Fichas20Model.Alma_Imagen">
+              <MappingFragment StoreEntitySet="Alma_Imagen">
+                <ScalarProperty Name="IdPost" ColumnName="IdPost" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="Contenido" ColumnName="Contenido" />
+                <ScalarProperty Name="NombreImagen" ColumnName="NombreImagen" />
+                <ScalarProperty Name="IdImagen" ColumnName="IdImagen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alma_Noticia">
+            <EntityTypeMapping TypeName="Fichas20Model.Alma_Noticia">
+              <MappingFragment StoreEntitySet="Alma_Noticia">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="IdPost" ColumnName="IdPost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

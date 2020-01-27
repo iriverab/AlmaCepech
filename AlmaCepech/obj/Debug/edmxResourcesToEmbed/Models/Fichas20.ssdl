@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Fichas20Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Alma_Aprobacion">
+    <Key>
+      <PropertyRef Name="IdGusta" />
+    </Key>
+    <Property Name="IdGusta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdUsuario" Type="int" />
+    <Property Name="Gusta" Type="int" />
+    <Property Name="Fecha" Type="datetime" />
+    <Property Name="IdPost" Type="int" />
+  </EntityType>
+  <EntityType Name="Alma_Comentario">
+    <Key>
+      <PropertyRef Name="IdComentario" />
+    </Key>
+    <Property Name="IdComentario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdUsuario" Type="int" />
+    <Property Name="IdPost" Type="int" />
+    <Property Name="Comentario" Type="varchar(max)" />
+    <Property Name="Fecha" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Alma_Imagen">
+    <Key>
+      <PropertyRef Name="IdImagen" />
+    </Key>
+    <Property Name="IdImagen" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombreImagen" Type="varchar" MaxLength="500" />
+    <Property Name="Contenido" Type="varbinary(max)" />
+    <Property Name="ContentType" Type="varchar" MaxLength="150" />
+    <Property Name="IdPost" Type="int" />
+  </EntityType>
+  <EntityType Name="Alma_Noticia">
+    <Key>
+      <PropertyRef Name="IdPost" />
+    </Key>
+    <Property Name="IdPost" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Titulo" Type="varchar(max)" />
+    <Property Name="IdUsuario" Type="int" />
+    <Property Name="Fecha" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="ID_Usuario" />
+    </Key>
+    <Property Name="ID_Usuario" Type="int" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Nombre_Completo" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Ejecutiva_Tlmk" Type="bit" Nullable="false" />
+    <Property Name="ID_Grupo" Type="tinyint" Nullable="false" />
+    <Property Name="Anexo" Type="smallint" />
+    <Property Name="email" Type="varchar" MaxLength="100" />
+    <Property Name="Cargo" Type="varchar" MaxLength="100" />
+    <Property Name="ID_Sede" Type="int" Nullable="false" />
+    <Property Name="Nivel" Type="char" MaxLength="3" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Fallas" Type="tinyint" Nullable="false" />
+    <Property Name="Internet" Type="tinyint" Nullable="false" />
+    <Property Name="NivelCobra" Type="char" MaxLength="3" Nullable="false" />
+    <Property Name="Ejecutivo_Cobranza" Type="tinyint" />
+    <Property Name="ID_TipoU" Type="tinyint" Nullable="false" />
+    <Property Name="Ultimo_Mensaje" Type="int" />
+    <Property Name="fecha_vencimiento" Type="smalldatetime" />
+    <Property Name="fecha_nacimiento" Type="smalldatetime" />
+    <Property Name="ID_Sede_Laboral" Type="tinyint" />
+    <Property Name="Activo" Type="tinyint" />
+    <Property Name="usuario_desarrollo" Type="int" />
+    <Property Name="Rut_usuario" Type="int" />
+    <Property Name="Dv_Rut" Type="char" MaxLength="1" />
+    <Property Name="id_perfil" Type="int" />
+    <Property Name="Id_Impresora_Boletas" Type="int" />
+    <Property Name="Ejecutiva_CCenter_Cobranza" Type="char" MaxLength="10" />
+    <Property Name="ID_perfil_Wired" Type="int" />
+    <Property Name="id_perfil_icobra" Type="int" />
+    <Property Name="Ejecutivo_Call_Center_IP" Type="bit" />
+    <Property Name="autoriza_convenio" Type="int" />
+    <Property Name="username_GP" Type="char" MaxLength="15" />
+    <Property Name="subir_excel_ensayos" Type="bit" />
+    <Property Name="id_sede_corporacion" Type="int" />
+    <Property Name="Usuario_Televenta" Type="int" />
+    <Property Name="Usuario_Dominio" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_Alma_Aprobacion_Alma_Noticia">
+    <End Role="Alma_Noticia" Type="Self.Alma_Noticia" Multiplicity="0..1" />
+    <End Role="Alma_Aprobacion" Type="Self.Alma_Aprobacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Alma_Noticia">
+        <PropertyRef Name="IdPost" />
+      </Principal>
+      <Dependent Role="Alma_Aprobacion">
+        <PropertyRef Name="IdPost" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Alma_Comentario_Alma_Noticia">
+    <End Role="Alma_Noticia" Type="Self.Alma_Noticia" Multiplicity="0..1" />
+    <End Role="Alma_Comentario" Type="Self.Alma_Comentario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Alma_Noticia">
+        <PropertyRef Name="IdPost" />
+      </Principal>
+      <Dependent Role="Alma_Comentario">
+        <PropertyRef Name="IdPost" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Alma_Imagen_Alma_Noticia">
+    <End Role="Alma_Noticia" Type="Self.Alma_Noticia" Multiplicity="0..1" />
+    <End Role="Alma_Imagen" Type="Self.Alma_Imagen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Alma_Noticia">
+        <PropertyRef Name="IdPost" />
+      </Principal>
+      <Dependent Role="Alma_Imagen">
+        <PropertyRef Name="IdPost" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Alma_Noticia_Usuarios">
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+    <End Role="Alma_Noticia" Type="Self.Alma_Noticia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="ID_Usuario" />
+      </Principal>
+      <Dependent Role="Alma_Noticia">
+        <PropertyRef Name="IdUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Fichas20ModelStoreContainer">
+    <EntitySet Name="Alma_Aprobacion" EntityType="Self.Alma_Aprobacion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Alma_Comentario" EntityType="Self.Alma_Comentario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Alma_Imagen" EntityType="Self.Alma_Imagen" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Alma_Noticia" EntityType="Self.Alma_Noticia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Alma_Aprobacion_Alma_Noticia" Association="Self.FK_Alma_Aprobacion_Alma_Noticia">
+      <End Role="Alma_Noticia" EntitySet="Alma_Noticia" />
+      <End Role="Alma_Aprobacion" EntitySet="Alma_Aprobacion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Alma_Comentario_Alma_Noticia" Association="Self.FK_Alma_Comentario_Alma_Noticia">
+      <End Role="Alma_Noticia" EntitySet="Alma_Noticia" />
+      <End Role="Alma_Comentario" EntitySet="Alma_Comentario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Alma_Imagen_Alma_Noticia" Association="Self.FK_Alma_Imagen_Alma_Noticia">
+      <End Role="Alma_Noticia" EntitySet="Alma_Noticia" />
+      <End Role="Alma_Imagen" EntitySet="Alma_Imagen" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Alma_Noticia_Usuarios" Association="Self.FK_Alma_Noticia_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Alma_Noticia" EntitySet="Alma_Noticia" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

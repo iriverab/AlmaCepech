@@ -1,0 +1,45 @@
+﻿
+
+@foreach (var com in (List<AlmaCepech.Models.Alma_Comentario>)ViewBag.Data)
+{
+    <div class="media">
+        <div class="media-left">
+            <span>
+                <span class="square-box user_img">
+                    <span class="square-content" style="background-image: url('/Content/Photos/img-default.png');"></span>
+                </span>
+            </span>
+        </div>
+        <div class="media-body">
+            <ul class="nav dropdown pull-right">
+                <li class="">
+
+                </li>
+            </ul><!--/pull-right -->
+            <span class="media-message">
+                <span class="card-title">@Html.Action("getNombreUsuario", new { IdUsuario = com.IdUsuario }):&nbsp;</span>
+                <span class="editable">
+                    @com.Comentario
+                </span>
+            </span>
+        </div>
+    </div>
+}
+
+<div class="col-md-12">
+    @{
+        var Id = ViewBag.id.ToString();
+        string Control = "txtComentario" + Id;
+    }
+    <div class="form-group form-inline">
+        @Html.TextBox(Control, "", new { @Class = "form-control col-md-10 col-sm-10 col-xs-4 form-control-sm", @placeholder = "Ingrese su Comentario" })
+        <a class="btn btn-primary btn-sm" id="btn_@Control" style="color:white;font-weight:bold;font-size:10px" onclick="GrabarComentario('@Id')">Agregar </a>
+    </div>
+    <script type="text/javascript">
+        $('#@Control').keyup(function (e) {
+            if (e.keyCode == 13) {
+                GrabarComentario('@Id');
+            }
+        });
+    </script>
+</div>

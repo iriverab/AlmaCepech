@@ -1,0 +1,46 @@
+﻿@model AlmaCepech.Models.Alma_Noticia
+
+@{
+    ViewBag.Title = "agregar";
+}
+
+<h2>Ingresar Noticia</h2>
+<div class="container">
+    @using (Html.BeginForm("agregar", "home", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @if (!string.IsNullOrEmpty(ViewBag.error))
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.error
+                </div>
+            }
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Titulo, new { rows = "", cols = "", style = "width: 100%; height: 100px;", @class = "form-control", required = "required" })
+                </div>
+            </div>
+            @Html.HiddenFor(model => model.IdUsuario)
+            @Html.HiddenFor(model => model.Fecha)
+            <div class="form-group">
+                <label class="control-label col-md-2">Photos</label>
+                <div class="col-md-10">
+                    <input type="file" name="files" multiple class="form-control" required accept="image/x-png,image/gif,image/jpeg" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Grabar" class="btn btn-primary" />
+                    @Html.ActionLink("Cancelar", "Index", "", new { Class = "btn btn-danger" })
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

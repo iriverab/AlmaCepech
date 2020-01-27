@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Fichas20ModelStoreContainer" CdmEntityContainer="Fichas20Entities">
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="Fichas20Model.Usuarios">
+        <MappingFragment StoreEntitySet="Usuarios">
+          <ScalarProperty Name="ID_Usuario" ColumnName="ID_Usuario" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Nombre_Completo" ColumnName="Nombre_Completo" />
+          <ScalarProperty Name="Ejecutiva_Tlmk" ColumnName="Ejecutiva_Tlmk" />
+          <ScalarProperty Name="ID_Grupo" ColumnName="ID_Grupo" />
+          <ScalarProperty Name="Anexo" ColumnName="Anexo" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="Cargo" ColumnName="Cargo" />
+          <ScalarProperty Name="ID_Sede" ColumnName="ID_Sede" />
+          <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="Fallas" ColumnName="Fallas" />
+          <ScalarProperty Name="Internet" ColumnName="Internet" />
+          <ScalarProperty Name="NivelCobra" ColumnName="NivelCobra" />
+          <ScalarProperty Name="Ejecutivo_Cobranza" ColumnName="Ejecutivo_Cobranza" />
+          <ScalarProperty Name="ID_TipoU" ColumnName="ID_TipoU" />
+          <ScalarProperty Name="Ultimo_Mensaje" ColumnName="Ultimo_Mensaje" />
+          <ScalarProperty Name="fecha_vencimiento" ColumnName="fecha_vencimiento" />
+          <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+          <ScalarProperty Name="ID_Sede_Laboral" ColumnName="ID_Sede_Laboral" />
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+          <ScalarProperty Name="usuario_desarrollo" ColumnName="usuario_desarrollo" />
+          <ScalarProperty Name="Rut_usuario" ColumnName="Rut_usuario" />
+          <ScalarProperty Name="Dv_Rut" ColumnName="Dv_Rut" />
+          <ScalarProperty Name="id_perfil" ColumnName="id_perfil" />
+          <ScalarProperty Name="Id_Impresora_Boletas" ColumnName="Id_Impresora_Boletas" />
+          <ScalarProperty Name="Ejecutiva_CCenter_Cobranza" ColumnName="Ejecutiva_CCenter_Cobranza" />
+          <ScalarProperty Name="ID_perfil_Wired" ColumnName="ID_perfil_Wired" />
+          <ScalarProperty Name="id_perfil_icobra" ColumnName="id_perfil_icobra" />
+          <ScalarProperty Name="Ejecutivo_Call_Center_IP" ColumnName="Ejecutivo_Call_Center_IP" />
+          <ScalarProperty Name="autoriza_convenio" ColumnName="autoriza_convenio" />
+          <ScalarProperty Name="username_GP" ColumnName="username_GP" />
+          <ScalarProperty Name="subir_excel_ensayos" ColumnName="subir_excel_ensayos" />
+          <ScalarProperty Name="id_sede_corporacion" ColumnName="id_sede_corporacion" />
+          <ScalarProperty Name="Usuario_Televenta" ColumnName="Usuario_Televenta" />
+          <ScalarProperty Name="Usuario_Dominio" ColumnName="Usuario_Dominio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Alma_Aprobacion">
+      <EntityTypeMapping TypeName="Fichas20Model.Alma_Aprobacion">
+        <MappingFragment StoreEntitySet="Alma_Aprobacion">
+          <ScalarProperty Name="IdPost" ColumnName="IdPost" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Gusta" ColumnName="Gusta" />
+          <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+          <ScalarProperty Name="IdGusta" ColumnName="IdGusta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Alma_Comentario">
+      <EntityTypeMapping TypeName="Fichas20Model.Alma_Comentario">
+        <MappingFragment StoreEntitySet="Alma_Comentario">
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+          <ScalarProperty Name="IdPost" ColumnName="IdPost" />
+          <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+          <ScalarProperty Name="IdComentario" ColumnName="IdComentario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Alma_Imagen">
+      <EntityTypeMapping TypeName="Fichas20Model.Alma_Imagen">
+        <MappingFragment StoreEntitySet="Alma_Imagen">
+          <ScalarProperty Name="IdPost" ColumnName="IdPost" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="Contenido" ColumnName="Contenido" />
+          <ScalarProperty Name="NombreImagen" ColumnName="NombreImagen" />
+          <ScalarProperty Name="IdImagen" ColumnName="IdImagen" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Alma_Noticia">
+      <EntityTypeMapping TypeName="Fichas20Model.Alma_Noticia">
+        <MappingFragment StoreEntitySet="Alma_Noticia">
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+          <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+          <ScalarProperty Name="IdPost" ColumnName="IdPost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

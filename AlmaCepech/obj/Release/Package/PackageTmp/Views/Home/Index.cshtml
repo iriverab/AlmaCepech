@@ -1,0 +1,188 @@
+﻿@{
+    ViewBag.Title = "Noticias Alma CPECH";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<div class="container">
+    <a class="btn btn-dark" href="@Url.Action("agregar","Home")">Agregar Noticia</a>
+    @foreach (var data in (List<AlmaCepech.Models.Alma_Noticia>)ViewBag.Data)
+    {
+        var indice = 1;
+        var activoindice = 0;
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@data.Usuarios.Nombre_Completo</h5>
+                @*<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>*@
+                <p class="card-text">@data.Titulo</p>
+                <div style="cursor:pointer" data-toggle="modal" data-target="#Post_@data.IdPost">
+                    @foreach (var item in data.Alma_Imagen)
+                    {
+                        if (indice > 4)
+                        {
+                            break;
+                        }
+                        var base64 = Convert.ToBase64String(item.Contenido);
+                        var imgSrc = String.Format("data:" + item.ContentType + ";base64,{0}", base64);
+                        <div class="responsive">
+                            <div class="gallery">
+                                <img src="@imgSrc" />
+                                @*<div class="desc">Add a description of the image here</div>*@
+                            </div>
+                        </div>
+                        {
+                            indice = indice + 1;
+                        }
+                    }
+                </div>
+                <div class="modal fade" id="Post_@data.IdPost" tabindex="-1" role="dialog" aria-labelledby="ModalCarouselLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            @*<div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>*@
+
+                            <div id="carouselExampleIndicators_@data.IdPost" class="carousel slide" data-ride="carousel" data-interval="2000">
+                                <ol class="carousel-indicators">
+                                    @for (int i = 0; i < data.Alma_Imagen.Count(); i++)
+                                    {
+                                        var active = (i == 0) ? "active" : "";
+                                        <li data-target="#carouselExampleIndicators_@data.IdPost" data-slide-to="@i" @active></li>
+                                    }
+                                </ol>
+                                <div class="carousel-inner">
+
+                                    @foreach (var item in data.Alma_Imagen)
+                                    {
+                                        var active = (activoindice == 0) ? "active" : "";
+                                        var base64 = Convert.ToBase64String(item.Contenido);
+                                        var imgSrc = String.Format("data:" + item.ContentType + ";base64,{0}", base64);
+                                        <div class="carousel-item @active">
+                                            <img class="d-block w-100" src="@imgSrc" alt="@item.NombreImagen">
+                                        </div>
+                                        {
+                                            activoindice = activoindice + 1;
+                                        }
+                                    }
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExampleIndicators_@data.IdPost" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Siguiente</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleIndicators_@data.IdPost" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Siguiente</span>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                @if (data.Alma_Aprobacion.Count > 0)
+                {
+                    var arrstring = "";
+                    foreach (var like in data.Alma_Aprobacion)
+                    {
+                        arrstring = arrstring + "<p>" + Html.Action("getNombreUsuario", new { IdUsuario = like.IdUsuario }) + "</p>";
+                    }
+                    <span style="color:blue;font-size:smaller;font-weight:bold;cursor:pointer" id="mybtn_@data.IdPost" data-toggle="tooltip" data-html="true" title="@arrstring" onclick="MarcarMeGusta('@data.IdPost')">
+                        <i class="fa fa-thumbs-o-up" id="contador_@data.IdPost"> @data.Alma_Aprobacion.Count</i>
+                    </span>
+
+                }
+                else
+                {
+                    <span style="font-size:smaller;font-weight:bold;cursor:pointer" onclick="MarcarMeGusta('@data.IdPost')">
+                        <i class="fa fa-thumbs-o-up" id="contador_@data.IdPost"></i>
+                    </span>
+                }
+            </div>
+            <div class="card-footer">
+                <div id="comentario-@data.IdPost"></div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var json = { id: @data.IdPost };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("comentario", "Home")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("#comentario-" + @data.IdPost).html(data);
+                }
+            });
+
+
+
+        </script>
+    }
+
+
+</div>
+<script>
+    $(document).ready(function () {
+        $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+    });
+    function CargarComentario(id) {
+        var json = {id : id};
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("comentario", "Home")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("#comentario-" + id).html(data);
+                }
+            });
+    }
+
+    function MarcarMeGusta(idpost) {
+        var control = "#contador_" + idpost;
+        var btn = "#mybtn_" + idpost;
+        var valor = $(control).text().trim();
+        var title = $(btn).data('original-title');
+        var json = { id: idpost, idusuario:'@Session["ID_Usuario"]' };
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("SaveLike", "Home")',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(json),
+            success: function (data) {
+                var status = data.split('|');
+                data = status[0];
+                if (data == "OK") {
+                    if (valor != "")
+                        valor = parseInt(valor) + 1;
+                    else
+                        valor = 1;
+                    $(control).text(" " + valor);
+                    $(btn).attr('data-original-title', title + '<p>' + status[1] + '</p>');
+                }
+                else
+                    alert("Ya esta ingresado su me gusta!");
+            }
+        });
+    }
+
+    function GrabarComentario(idpost) {
+        var NombreControl = "#txtComentario" + idpost;
+        var valorComentario = $(NombreControl).val();
+        if (valorComentario.trim() == "") {
+            alert("Debes ingresar un comentario!");
+            return;
+        }
+        var json = { idpost: idpost, comentario: valorComentario , idusuario : @Session["ID_Usuario"] };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GrabarComentario", "Home")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    CargarComentario(idpost);
+                }
+            });
+    }
+</script>
