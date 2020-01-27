@@ -17,6 +17,8 @@
                 <a class="navbar-brand" href="#"> @Html.ActionLink("Alma CPECH", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</a>
             </div>
             <span class="nav navbar-text pull-right">¡Hola, @User.Identity.Name!</span>
+                <a class="navbar-brand" href="#"> @Html.ActionLink("Logout", "LogOff", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+
         </div>
     </nav>
 
