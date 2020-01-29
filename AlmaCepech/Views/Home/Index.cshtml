@@ -9,24 +9,26 @@
     {
         var indice = 1;
         var activoindice = 0;
-        <div class="card">
+        <div class="card" id="NoticiaID_@data.IdPost">
             <div class="card-body">
-                <h5 class="card-title">@data.Usuarios.Nombre_Completo</h5>
+                <h5 class="card-title">
+                    @data.Usuarios.Nombre_Completo
+                                @if (data.IdUsuario.ToString() == Session["ID_Usuario"].ToString())
+                                {
+                                    <a href="@Url.Action("Agregar","Home" , new { id = data.IdPost})" class="btn btn-success pull-right btn-sm" style="color:white;font-weight:bold;font-size:10px"><i class="fa fa-edit"></i> Editar</a>
+                                    <a onclick="EliminarNoticia('@data.IdPost')" class="btn btn-danger pull-right btn-sm" style="color:white;font-weight:bold;font-size:10px"><i class="fa fa-remove"></i> Eliminar</a>
+                                }
+                            </h5>
                 @*<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>*@
                 <p class="card-text">@data.Titulo</p>
                 <div style="cursor:pointer" data-toggle="modal" data-target="#Post_@data.IdPost">
-                    @foreach (var item in data.Alma_Imagen)
+                    @foreach (var item in data.Alma_Imagen.Take(4))
                     {
-                        if (indice > 4)
-                        {
-                            break;
-                        }
                         var base64 = Convert.ToBase64String(item.Contenido);
                         var imgSrc = String.Format("data:" + item.ContentType + ";base64,{0}", base64);
                         <div class="responsive">
                             <div class="gallery">
                                 <img src="@imgSrc" />
-                                @*<div class="desc">Add a description of the image here</div>*@
                             </div>
                         </div>
                         {
@@ -108,9 +110,6 @@
                     $("#comentario-" + @data.IdPost).html(data);
                 }
             });
-
-
-
         </script>
     }
 
@@ -131,6 +130,24 @@
                     $("#comentario-" + id).html(data);
                 }
             });
+    }
+
+    function EliminarComentario(id) {
+         if (confirm("Está seguro de eliminar tu comentario?")) {
+            var json = { id: id };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("eliminarComentario", "Home")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    if (data == "OK")
+                        $("#Comentario_" + id).remove();
+                    else
+                        alert("Error al eliminar Comentario");
+                }
+            });
+        }
     }
 
     function MarcarMeGusta(idpost) {
@@ -178,6 +195,25 @@
                     CargarComentario(idpost);
                 }
             });
+    }
+
+    function EliminarNoticia(id) {
+         if (confirm("Está seguro de eliminar tu la Noticia?")) {
+            var json = { id: id };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Delete", "Home")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    if (data == "OK")
+                        $("#NoticiaID_" + id).remove();
+                    else
+                        alert("Error al eliminar Comentario");
+                }
+            });
+        }
+    
     }
 
     

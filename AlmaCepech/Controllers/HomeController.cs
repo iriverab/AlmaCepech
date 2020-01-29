@@ -64,9 +64,57 @@ namespace AlmaCepech.Controllers
                 return Json("NO");
         }
 
+        [HttpPost]
+        public JsonResult eliminarImagen(int id)
+        {
+            try
+            {
+                var imagen = _db.Alma_Imagen.Find(id);
+                _db.Alma_Imagen.Remove(imagen);
+                _db.SaveChanges();
+                return Json("OK");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult eliminarComentario(int id)
+        {
+            try
+            {
+                var comentario = _db.Alma_Comentario.Find(id);
+                _db.Alma_Comentario.Remove(comentario);
+                _db.SaveChanges();
+                return Json("OK");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
+        }
+
         public String getNombreUsuario(int IdUsuario = 0)
         {
             return _db.Usuarios.Find(IdUsuario).Nombre_Completo;
+        }
+
+        [HttpPost]
+        public JsonResult Delete(int id)
+        {
+            try
+            {
+                var noticia = _db.Alma_Noticia.Find(id);
+                _db.Alma_Noticia.Remove(noticia);
+                _db.SaveChanges();
+                return Json("OK");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -77,15 +125,21 @@ namespace AlmaCepech.Controllers
             {
                 if (obj.Titulo == "")
                     throw new ArgumentException("Debes ingresar un titulo a la noticia");
-                if (files.Count() == 0)
+                if (obj.IdPost == 0 && files.Count() == 0)
                     throw new ArgumentException("Debes ingresar al menos una photo!");
                 if (ModelState.IsValid)
                 {
-                    if (obj.IdPost == 0)
-                    {
+                    if (obj.IdPost == 0) //solo insertamos si es nuevo
                         _db.Alma_Noticia.Add(obj);
-                        _db.SaveChanges();
-                        var idpost = obj.IdPost;
+                    else
+                    {
+                        _db.Entry(obj).State = System.Data.Entity.EntityState.Modified;
+                    }
+                    _db.SaveChanges();
+
+                    var idpost = obj.IdPost;
+                    if (files.Where(x => x != null).Count() > 0)
+                    {
                         foreach (var item in files)
                         {
                             byte[] data;
@@ -108,6 +162,7 @@ namespace AlmaCepech.Controllers
                             _db.SaveChanges();
                         }
                     }
+
                     return RedirectToAction("Index", "Home");
                 }
                 else

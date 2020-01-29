@@ -2,9 +2,13 @@
 
 @{
     ViewBag.Title = "agregar";
+    var required = (Model.IdPost == 0) ? "required" : "";
+    var Titulo = (Model.IdPost == 0) ? "Ingresar" : "Editar";
 }
 
-<h2>Ingresar Noticia</h2>
+<h2>
+    @Titulo Noticia
+</h2>
 <div class="container">
     @using (Html.BeginForm("agregar", "home", FormMethod.Post, new { @enctype = "multipart/form-data" }))
     {
@@ -27,20 +31,63 @@
             </div>
             @Html.HiddenFor(model => model.IdUsuario)
             @Html.HiddenFor(model => model.Fecha)
+            @Html.HiddenFor(model => model.IdPost)
+            <div class="form-group">
+                <label class="control-label col-md-2">Imágenes</label>
+                <ul class="list-group col-md-10" style="padding:0px;margin:0px">
+
+                    @foreach (var item in Model.Alma_Imagen)
+                    {
+                        var base64 = Convert.ToBase64String(item.Contenido);
+                        var imgSrc = String.Format("data:" + item.ContentType + ";base64,{0}", base64);
+                        <li class="list-group-item" style="padding:0.3rem 1.25rem;" id="LiMagen_@item.IdImagen">
+                            <span data-toggle="modal" data-target="#Post_@item.IdImagen" style="cursor:pointer"><i class="fa fa-link"></i> @item.NombreImagen</span>
+                            <span class="pull-right" style="color:red;cursor:pointer" title="Eliminar imagen @item.NombreImagen" onclick="javascript:EliminarImagen('@item.IdImagen')"><i class="fa fa-remove"></i></span>
+                        </li>
+                        <div class="modal fade" id="Post_@item.IdImagen" tabindex="-1" role="dialog" aria-labelledby="ModalCarouselLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <img class="d-block w-100" src="@imgSrc" alt="@item.NombreImagen">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </ul>
+            </div>
             <div class="form-group">
                 <label class="control-label col-md-2">Photos</label>
                 <div class="col-md-10">
-                    <input type="file" name="files" multiple class="form-control" required accept="image/x-png,image/gif,image/jpeg" />
+                    <input type="file" name="files" multiple class="form-control" @required accept="image/x-png,image/gif,image/jpeg" />
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Grabar" class="btn btn-primary" />
-                    @Html.ActionLink("Cancelar", "Index", "", new { Class = "btn btn-danger" })
+                    @Html.ActionLink("Volver", "Index", "Home", "", new { Class = "btn btn-danger" })
                 </div>
             </div>
         </div>
     }
 
 </div>
+
+<script type="text/javascript">
+    function EliminarImagen(id) {
+        if (confirm("Está seguro de eliminar la imagen?")) {
+            var json = { id: id };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("eliminarImagen", "Home")',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(json),
+                success: function (data) {
+                    if (data == "OK")
+                        $("#LiMagen_" + id).closest('li').remove();
+                    else
+                        alert("Error al eliminar imagen");
+                }
+            });
+        }
+    }
+</script>

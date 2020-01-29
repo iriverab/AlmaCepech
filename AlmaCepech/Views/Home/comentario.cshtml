@@ -16,10 +16,14 @@
 
                 </li>
             </ul><!--/pull-right -->
-            <span class="media-message">
+            <span class="media-message" id="Comentario_@com.IdComentario">
                 <span class="card-title">@Html.Action("getNombreUsuario", new { IdUsuario = com.IdUsuario }):&nbsp;</span>
                 <span class="editable">
-                    @com.Comentario
+                    @com.Comentario 
+                    @if (com.IdUsuario.ToString() == Session["ID_Usuario"].ToString())
+                    {
+                        <i class="fa fa-remove" title="Eliminar Comentario" style="cursor:pointer" onclick="EliminarComentario('@com.IdComentario')"></i>
+                    }
                 </span>
             </span>
         </div>
@@ -41,5 +45,8 @@
                 GrabarComentario('@Id');
             }
         });
+
+
+        
     </script>
 </div>

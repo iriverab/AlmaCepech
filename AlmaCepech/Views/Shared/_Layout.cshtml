@@ -16,9 +16,10 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="#"> @Html.ActionLink("Alma CPECH", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</a>
             </div>
-            <span class="nav navbar-text pull-right">¡Hola, @User.Identity.Name!</span>
-                <a class="navbar-brand" href="#"> @Html.ActionLink("Logout", "LogOff", "Login", new { area = "" }, new { @class = "navbar-brand" })</a>
+            <span class="nav navbar-text pull-right">¡Hola, @User.Identity.Name! <i class="fa fa-sign-out btn navbar-text" onclick="javascript:Salir()" title="Salir del sistema"></i></span>
+            
 
+  
         </div>
     </nav>
 
@@ -36,6 +37,11 @@
     @Scripts.Render("~/bundles/bootstrap")
 
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        function Salir() {
+            location.href = '@Url.Action("LogOff","Login")';
 
+        }
+    </script>
 </body>
 </html>
